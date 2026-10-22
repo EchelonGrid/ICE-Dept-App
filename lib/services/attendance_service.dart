@@ -58,7 +58,7 @@ class AttendanceService {
 
     final response = await _client
         .from('attendance')
-        .select('*, users(name), class_routine(course_name)')
+        .select('*, users(name)')
         .eq('class_id', classId)
         .eq('date', dateStr);
 
@@ -69,7 +69,7 @@ class AttendanceService {
   Future<List<AttendanceModel>> getStudentAttendanceHistory(String studentId) async {
     final response = await _client
         .from('attendance')
-        .select('*, class_routine(course_name, room_number)')
+        .select()
         .eq('student_id', studentId)
         .order('date', ascending: false);
 
@@ -108,7 +108,7 @@ class AttendanceService {
 
       final response = await _client
           .from('attendance')
-          .select('*, users(name), class_routine(course_name, room_number, batch)')
+          .select('*, users(name)')
           .order('date', ascending: false)
           .limit(limit);
 
